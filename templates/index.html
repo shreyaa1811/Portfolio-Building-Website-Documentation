@@ -7,11 +7,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-  html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
+
 
   :root {
     --navy: #080f1e;
@@ -45,24 +41,18 @@
 
   /* ── TOP BAR ── */
   .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-
   background: var(--navy);
   border-bottom: 1px solid var(--border-dark);
-
   height: 52px;
-
-  width: 100%;
   display: flex;
-
   align-items: center;
   justify-content: space-between;
-
+  width: 100%;
+  min-width: 100%;
   padding: 0 2rem;
   box-sizing: border-box;
-  }
+  flex-shrink: 0;
+}
 
   .topbar-brand {
     font-family: var(--mono);
@@ -91,12 +81,13 @@
 
   /* ── LAYOUT ── */
   .layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    min-height: calc(100vh - 52px);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 52px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 52px;   /* ADD THIS */
+}
 
   /* ── SIDEBAR ── */
   .sidebar {
@@ -646,21 +637,17 @@
   .doc-footer {
   background: var(--navy);
   color: #475569;
-
   text-align: center;
-
   padding: 1.5rem;
   margin-top: 4rem;
-
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.06em;
-
   width: 100%;
+  min-width: 100%;   /* ADD THIS */
   display: block;
   box-sizing: border-box;
   }
-
   /* ── IMAGES ── */
  img {
     max-width: 100%;
@@ -676,12 +663,17 @@
   ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
   @media (max-width: 768px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    .main { padding: 2rem 1.25rem; }
-    .feature-grid, .why-grid { grid-template-columns: 1fr; }
-    .template-sections { grid-template-columns: repeat(3, 1fr); }
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 2rem 1.25rem; }
+  .feature-grid, .why-grid { grid-template-columns: 1fr; }
+  .template-sections { grid-template-columns: repeat(3, 1fr); }
+
+  .topbar-links {
+    gap: 8px !important;
+    font-size: 12px;
   }
+}
 </style>
 </head>
 <body>
@@ -1424,7 +1416,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
   </main>
 </div>
 
-<footer class="doc-footer">
+<footer class="doc-footer" style="width: 100%; box-sizing: border-box;">
   ASSOCIATION OF COMPUTING AND MACHINERY BPDC
 </footer>
 
