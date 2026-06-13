@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Own Portfolio Website — Base44 Workshop</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --navy: #080f1e;
+    --navy-mid: #0d1a30;
+    --navy-light: #132240;
+    --blue: #2563eb;
+    --blue-bright: #3b82f6;
+    --blue-pale: #dbeafe;
+    --white: #ffffff;
+    --off-white: #f8fafc;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+    --border: #e2e8f0;
+    --border-dark: #1e3050;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--off-white);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    border-bottom: 1px solid var(--border-dark);
+    padding: 0 2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topbar-brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--blue-bright);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .topbar-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .topbar-links a {
+    font-size: 12px;
+    color: var(--text-light);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.15s;
+  }
+
+  .topbar-links a:hover { color: var(--white); }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 52px);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    position: sticky;
+    top: 52px;
+    height: calc(100vh - 52px);
+    overflow-y: auto;
+    background: var(--white);
+  }
+
+  .sidebar-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .sidebar-section-label:first-child { margin-top: 0; }
+
+  .sidebar nav ul {
+    list-style: none;
+  }
+
+  .sidebar nav ul li a {
+    display: block;
+    padding: 0.35rem 0.5rem;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+
+  .sidebar nav ul li a:hover {
+    color: var(--blue);
+    background: var(--blue-pale);
+  }
+
+  .sidebar nav ul li.active a {
+    color: var(--blue);
+    font-weight: 500;
+    background: var(--blue-pale);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    padding: 3rem 3.5rem;
+    max-width: 820px;
+  }
+
+  /* ── HERO ── */
+  .doc-hero {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 3rem 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doc-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .doc-hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue-bright);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .doc-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .doc-hero p {
+    color: #94a3b8;
+    font-size: 15px;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: rgba(37,99,235,0.15);
+    color: var(--blue-bright);
+    border: 1px solid rgba(59,130,246,0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SECTION ── */
+  .doc-section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 72px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 20px;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: var(--mono);
+  }
+
+  p {
+    color: #334155;
+    margin-bottom: 1rem;
+    line-height: 1.75;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  /* ── LEARN LIST ── */
+  .learn-list {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .learn-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: #334155;
+    font-size: 14px;
+  }
+
+  .learn-list li::before {
+    content: '→';
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--blue);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .callout p { margin: 0; font-size: 14px; }
+
+  .callout-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .feature-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .feature-item:hover {
+    border-color: var(--blue-bright);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  }
+
+  .feature-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .feature-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .feature-desc {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── TEMPLATE CARDS ── */
+  .template-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 2rem 0;
+  }
+
+  .template-card-header {
+    background: var(--navy);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .template-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .template-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue-bright);
+    border: 1px solid rgba(59,130,246,0.4);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  .template-card-body {
+    padding: 1.5rem;
+  }
+
+  .template-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+
+  .template-sections {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .template-section-pill {
+    text-align: center;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.4rem 0.25rem;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  .template-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 13px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: opacity 0.15s;
+  }
+
+  .template-link:hover { opacity: 0.7; }
+  .template-link::after { content: '↗'; font-size: 11px; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: var(--navy);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border-dark);
+    background: var(--navy-mid);
+  }
+
+  .code-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #4ade80;
+    letter-spacing: 0.06em;
+  }
+
+  .code-copy {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border-dark);
+    border-radius: 3px;
+    padding: 0.2rem 0.6rem;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+  }
+
+  .code-copy:hover { color: var(--white); border-color: #475569; }
+
+  .code-block pre {
+    padding: 1.25rem 1.25rem;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: #cbd5e1;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ── TROUBLESHOOT ── */
+  .trouble-list {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .trouble-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .trouble-problem {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+
+  .trouble-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  .trouble-solution {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .trouble-solution li {
+    margin-bottom: 0.2rem;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    counter-reset: step;
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .step-num {
+    counter-increment: step;
+    width: 32px;
+    height: 32px;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    flex-shrink: 0;
+  }
+
+  .step-content h4 {
+    margin-top: 0.25rem;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .step-content p { font-size: 13.5px; margin: 0; }
+
+  /* ── WHY SECTION ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .why-item {
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .why-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .why-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+  }
+
+  .why-item p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+  /* ── PALETTE SWATCH ── */
+  .palette {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .swatch-color {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .swatch-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    background: var(--navy);
+    color: #475569;
+    text-align: center;
+    padding: 1.5rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    margin-top: 4rem;
+  }
+
+  /* ── IMAGES ── */
+ img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+  /* ── SCROLL UTIL ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 2rem 1.25rem; }
+    .feature-grid, .why-grid { grid-template-columns: 1fr; }
+    .template-sections { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar" style="display:flex; justify-content:space-between; align-items:center;">
+
+  <div class="topbar-left" style="display:flex; align-items:center; gap:10px;">
+    <img src="../static/images/ACM.png" style="height:28px; width:auto;">
+    <a class="topbar-brand" href="#">PORTFOLIO WEBSITE BUILDING</a>
+  </div>
+
+  <ul class="topbar-links" style="display:flex; gap:15px; list-style:none; margin:0; padding:0;">
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#platform">Platform</a></li>
+    <li><a href="#templates">Templates</a></li>
+    <li><a href="#publish">Publish</a></li>
+  </ul>
+
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <nav>
+      <div class="sidebar-section-label">Getting Started</div>
+      <ul>
+        <li><a href="#intro">Overview</a></li>
+        <li><a href="#what-is-portfolio">What is a Portfolio?</a></li>
+        <li><a href="#output">Final Output</a></li>
+      </ul>
+
+      <div class="sidebar-section-label">The Platform</div>
+      <ul>
+        <li><a href="#platform">Intro to Base44</a></li>
+        <li><a href="#features">Key Features</a></li>
+      </ul>
+
+      <div class="sidebar-section-label">Templates</div>
+      <ul>
+        <li><a href="#template-monograph">Monograph</a></li>
+        <li><a href="#template-burn">Burn</a></li>
+        <li><a href="#template-forge">Forge</a></li>
+        <li><a href="#template-riot">Riot</a></li>
+      </ul>
+
+      <div class="sidebar-section-label">Building & Publishing</div>
+      <ul>
+        <li><a href="#generating">Generating</a></li>
+        <li><a href="#troubleshoot">Troubleshooting</a></li>
+        <li><a href="#publish">Publishing</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="doc-hero">
+      <div class="doc-hero-eyebrow">Workshop Documentation</div>
+      <h1>Build Your Own Portfolio Website Using Base44</h1>
+      <p>Learn how to create and publish a professional portfolio website using AI-powered prompts</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Low-Code</span>
+        <span class="hero-tag">AI-Powered</span>
+        <span class="hero-tag">4 Templates</span>
+        <span class="hero-tag">Beginner Friendly</span>
+      </div>
+    </div>
+
+    <!-- INTRO -->
+    <section class="doc-section" id="intro">
+      <div class="section-label">Introduction</div>
+      <h2>Workshop Overview</h2>
+      <p>Want a website to showcase your projects, skills, and achievements without spending hours coding? This workshop introduces you to <strong>Base44</strong>, a low-code platform that helps you build and publish a professional portfolio website using simple prompts.</p>
+      <p>You'll discover why portfolios are important, explore different design templates, and customize your website to showcase your skills, projects, achievements, and contact information. By the end, you'll have a <strong>live portfolio link</strong> ready to share on LinkedIn, resumes, and internship applications.</p>
+
+      <h3>What you'll learn</h3>
+      <ul class="learn-list">
+        <li>What a portfolio website is and why it matters</li>
+        <li>How to use Base44 to create websites with prompts</li>
+        <li>How to customize templates to match your style</li>
+        <li>Common troubleshooting techniques</li>
+        <li>How to publish and share your website online</li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- WHAT IS PORTFOLIO -->
+    <section class="doc-section" id="what-is-portfolio">
+      <div class="section-label">Concepts</div>
+      <h2>What is a Portfolio and Why is it Needed?</h2>
+      <p>A portfolio is a collection of your personal work, achievements, and skills — presented on your own terms. In the digital world, it's a personal website that acts like your online resume, but cooler. Unlike a CV, you're not following a format; you're presenting yourself the way <em>you</em> want.</p>
+    
+      <img src="../static/images/img1.png">
+
+      <div class="callout">
+        <div class="callout-title">Portfolio vs. Resume</div>
+        <p>A resume follows a fixed format. A portfolio lets you <strong>show, not just tell</strong> — visitors can view or interact with your actual work, not just read about it.</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-item-title"><span class="why-dot"></span>First Impression</div>
+          <p>Helps you stand out when applying for internships, jobs, or any major opportunity.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-item-title"><span class="why-dot"></span>Show, Don't Tell</div>
+          <p>Let visitors try or view your work directly rather than just reading a description.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-item-title"><span class="why-dot"></span>Professional Identity</div>
+          <p>Build your personal brand and establish yourself in your field.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-item-title"><span class="why-dot"></span>Easy Sharing</div>
+          <p>One link — that's all you need to show people what you've got.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">For Beginners</div>
+        <p>Even without experience, a portfolio is powerful. It shows <strong>potential, creativity, and willingness to learn</strong> — not just past achievements.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- OUTPUT -->
+    <section class="doc-section" id="output">
+      <div class="section-label">Workshop Goal</div>
+      <h2>Final Expected Output</h2>
+      <p>By the end of this session, you'll have a fully published portfolio website with the following sections:</p>
+      <ul class="learn-list">
+        <li>A personal homepage with your name and intro</li>
+        <li>A section highlighting your skills</li>
+        <li>A projects section showcasing your work</li>
+        <li>A contact section with email or social links</li>
+        <li>A fully functional, published link ready to share</li>
+      </ul>
+      <img src="../static/images/image.png">
+    </section>
+
+    <hr class="divider">
+
+    <!-- PLATFORM -->
+    <section class="doc-section" id="platform">
+      <div class="section-label">The Platform</div>
+      <h2>Introduction to Base44</h2>
+      <p>Base44 is a low-code website building platform that lets you create websites using simple prompts instead of writing code. Instead of manually designing layouts or writing HTML/CSS and JavaScript, you simply describe what you want and let the platform generate the website automatically.</p>
+      <p>It acts as a bridge between your ideas and a working website — ideal for beginners who want results without the complexity of coding.</p>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="doc-section" id="features">
+      <div class="section-label">Platform Capabilities</div>
+      <h2>Key Features of Base44</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-num">01</div>
+          <div class="feature-title">AI-Powered App Building</div>
+          <p class="feature-desc">Create full web applications using natural language prompts instead of coding.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">02</div>
+          <div class="feature-title">Builder Chat Interface</div>
+          <p class="feature-desc">Describe your app in plain English and Base44 generates the structure and functionality.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">03</div>
+          <div class="feature-title">Discussion Mode</div>
+          <p class="feature-desc">Brainstorm and plan features in a sandbox without affecting your live app.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">04</div>
+          <div class="feature-title">Automatic Database Setup</div>
+          <p class="feature-desc">Databases are created and managed automatically based on your app requirements.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">05</div>
+          <div class="feature-title">Built-in Authentication</div>
+          <p class="feature-desc">User registration, login, and permissions included out of the box.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">06</div>
+          <div class="feature-title">File Storage Support</div>
+          <p class="feature-desc">Upload and manage files, images, and documents within your app.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">07</div>
+          <div class="feature-title">GitHub Integration</div>
+          <p class="feature-desc">Access, customize, and sync code through GitHub for full control.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">08</div>
+          <div class="feature-title">Real-Time Collaboration</div>
+          <p class="feature-desc">Multiple team members can work on the same app simultaneously.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">09</div>
+          <div class="feature-title">Responsive Design</div>
+          <p class="feature-desc">Apps automatically adapt to desktop, tablet, and mobile screens.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">10</div>
+          <div class="feature-title">Visual Styling Editor</div>
+          <p class="feature-desc">Modify colors, fonts, and layouts with real-time previews.</p>
+        </div>
+      </div>
+      <img src="../static/images/image 1.png">
+    </section>
+
+    <hr class="divider">
+
+    <!-- TEMPLATES -->
+    <section class="doc-section" id="templates">
+      <div class="section-label">Design Options</div>
+      <h2>Template Options</h2>
+      <p>Choose from four distinct visual styles. Each comes with a ready-to-use Base44 prompt — paste it in and go.</p>
+    </section>
+
+    <!-- TEMPLATE 1 -->
+    <section class="doc-section" id="template-monograph">
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">Monograph</div>
+          <span class="template-badge">TEMPLATE 01</span>
+        </div>
+        <div class="template-card-body">
+          <p class="template-desc">Minimal and atmospheric. White space is the main design element — work speaks for itself. Clean nav, full-bleed imagery, and a quiet typographic hierarchy. Suits any creative discipline.</p>
+
+          <h4>Pages</h4>
+          <div class="template-sections">
+            <div class="template-section-pill">Home</div>
+            <div class="template-section-pill">Work</div>
+            <div class="template-section-pill">About</div>
+            <div class="template-section-pill">Process</div>
+            <div class="template-section-pill">Contact</div>
+          </div>
+
+          <h4>Colour Palette</h4>
+          <div class="palette">
+            <div class="swatch"><div class="swatch-color" style="background:#FAFAFA; border-color:#e2e8f0;"></div><div class="swatch-label">#FAFAFA</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#111111;"></div><div class="swatch-label">#111111</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#6B46C1;"></div><div class="swatch-label">#6B46C1</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#E5E5E5; border-color:#e2e8f0;"></div><div class="swatch-label">#E5E5E5</div></div>
+          </div>
+
+          <h4>Customisation Highlights</h4>
+          <ul class="learn-list">
+            <li><strong>Home:</strong> Big light-weight name split across two lines, discipline + location, dark panel with recent projects</li>
+            <li><strong>Work:</strong> List of projects (title, category, year) — click to expand a full detail page</li>
+            <li><strong>About:</strong> Square portrait + bio + skills list with no icons, clean text</li>
+            <li><strong>Process:</strong> 4 numbered sections showing how you think — replace a resume with your workflow</li>
+            <li><strong>Contact:</strong> Centered, minimal — email link + simple form</li>
+          </ul>
+
+          <h4>Base44 Prompt</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">prompt.txt</span>
+              <button class="code-copy" onclick="copyCode(this)">copy</button>
+            </div>
+            <pre>Build a portfolio website with 5 pages: Home, Work, About, Process, Contact. Navigation is a clean top bar with the portfolio owner's name/logo on the left and page links on the right.
+
+VISUAL STYLE
+- Mostly white (#FAFAFA) with black (#111) text
+- One accent colour: purple (#6B46C1) used sparingly — links, hover states, one highlight element per page
+- Font: light weight (300) for big headings, regular (400) for body — feels editorial and calm
+- Lots of white space. Never crowded.
+- Images use a slightly grey placeholder (#E5E5E5) — full bleed where possible
+
+HOME PAGE
+- Split layout: left side has the person's name in large light-weight text (the name breaks across two lines), their discipline and location in small grey text below, and a subtle label "Creative Portfolio" above in tiny caps
+- Right side: a dark (#111) panel showing 2–3 recent project cards with title and year
+- Below the split: a one-line statement about their work in medium-sized text, centred
+
+WORK PAGE
+- Simple list of projects. Each row: project title in large text (left), category and year in grey (right), a thin line separating each row
+- Clicking a project opens a full detail page: full-width image area, title, category, year, Role and Description, optional "View Project ↗" button in purple, "← Back to Work" link at bottom
+
+ABOUT PAGE
+- Left: a square portrait placeholder (#E5E5E5, minimum 280x280px)
+- Right: name, title, a 3–4 line bio, and a short list of disciplines/skills — no icons, just clean text with a small dash prefix
+
+PROCESS PAGE
+- 4 short sections, each with a bold number (01, 02...) in accent purple, a heading, and a paragraph
+- Shows thinking and process — not job history
+
+CONTACT PAGE
+- Centred, minimal. One big line: "Let's work together."
+- Email address as a plain link in purple
+- Simple form: Name, Email, Message, and a Send button
+
+Keep it calm, spacious, and disciplined. The work should feel like it breathes.</pre>
+          </div>
+          <a class="template-link" href="https://monograph-template-portfolio-template.base44.app" target="_blank">View live template</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLATE 2 -->
+    <section class="doc-section" id="template-burn">
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">Burn</div>
+          <span class="template-badge">TEMPLATE 02</span>
+        </div>
+        <div class="template-card-body">
+          <p class="template-desc">Warm, bold, and full of personality. Deep terracotta and cream — feels handmade but polished. Big type, asymmetric layouts, strong opinions. For people who want their portfolio to feel like them.</p>
+
+          <h4>Pages</h4>
+          <div class="template-sections">
+            <div class="template-section-pill">Home</div>
+            <div class="template-section-pill">Work</div>
+            <div class="template-section-pill">About</div>
+            <div class="template-section-pill">Process</div>
+            <div class="template-section-pill">Contact</div>
+          </div>
+
+          <h4>Colour Palette</h4>
+          <div class="palette">
+            <div class="swatch"><div class="swatch-color" style="background:#1A0A00;"></div><div class="swatch-label">#1A0A00</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#F5E6D0; border-color:#e2e8f0;"></div><div class="swatch-label">#F5E6D0</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#C4521A;"></div><div class="swatch-label">#C4521A</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#8B5A3A;"></div><div class="swatch-label">#8B5A3A</div></div>
+          </div>
+
+          <h4>Customisation Highlights</h4>
+          <ul class="learn-list">
+            <li><strong>Home:</strong> Massive bold name on dark background, discipline as a terracotta pill tag, project previews on cream</li>
+            <li><strong>Work:</strong> 2-column card grid with category filters; each card has a terracotta top border</li>
+            <li><strong>About:</strong> Dark panel with portrait, cream panel with bio, discipline tags, and a pull quote</li>
+            <li><strong>Process:</strong> 4 sections (01–04) ending with "Why hire me" — the most memorable part</li>
+            <li><strong>Contact:</strong> Dark background, big "Say hello.", email large in terracotta, simple form</li>
+          </ul>
+
+          <h4>Base44 Prompt</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">prompt.txt</span>
+              <button class="code-copy" onclick="copyCode(this)">copy</button>
+            </div>
+            <pre>Build a portfolio website with 5 pages: Home, Work, About, Process, Contact. Navigation is a top bar with the name/logo on the left in bold cream text and page links on the right in clay colour.
+
+VISUAL STYLE
+- Dark background: #1A0A00 (espresso) for hero sections and nav
+- Light sections: #F5E6D0 (cream) for content-heavy pages
+- Accent: #C4521A (terracotta) — used for labels, tags, highlights, borders
+- Secondary: #8B5A3A (clay) for subtext and muted elements
+- Font: heavy bold (800) for headings — big and tight letter-spacing; regular for body
+- Cards have a left border in terracotta instead of a full border
+
+HOME PAGE
+- Dark espresso background, full viewport height
+- Person's name in massive bold white text (two lines, tight tracking)
+- Their discipline as a small terracotta pill/tag below the name
+- City and availability status in tiny clay text at the bottom
+- Right side: 2 project cards on a cream background — each card has a terracotta left border
+
+WORK PAGE
+- Cream background, projects as cards in a 2-column grid
+- Each card: image placeholder with 4px terracotta top border, bold title, one-line description, category tag
+- Simple text filter: All / Branding / Film / Research / Personal
+- Clicking opens a full detail page with image area, title, role, description, optional "View Project ↗" button
+
+ABOUT PAGE
+- Split: left dark panel with large name in cream + portrait; right cream panel with bio
+- Below: "What I do" — horizontal row of discipline tags in terracotta background with cream text
+- One big pull quote in large italic text, centred
+
+PROCESS PAGE
+- Cream background, 4 sections numbered 01–04
+- Large terracotta number, bold heading, short paragraph
+- Final section titled "Why hire me" — direct and honest
+
+CONTACT PAGE
+- Dark espresso background
+- Big bold headline: "Say hello."
+- Email address large in terracotta
+- Form: Name, Email, Message — cream inputs, terracotta focus border, terracotta submit button
+
+Make it feel warm, confident, and human.</pre>
+          </div>
+          <a class="template-link" href="https://monolith-template-portfolio-website.base44.app" target="_blank">View live template</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLATE 3 -->
+    <section class="doc-section" id="template-forge">
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">Forge</div>
+          <span class="template-badge">TEMPLATE 03</span>
+        </div>
+        <div class="template-card-body">
+          <p class="template-desc">Dark, technical, and modern. Inspired by developer tools and engineering platforms. Information is structured, data-driven, and project-focused. Emphasizes technical depth, systems thinking, and professional credibility.</p>
+
+          <h4>Pages</h4>
+          <div class="template-sections">
+            <div class="template-section-pill">Home</div>
+            <div class="template-section-pill">Work</div>
+            <div class="template-section-pill">About</div>
+            <div class="template-section-pill">Process</div>
+            <div class="template-section-pill">Contact</div>
+          </div>
+
+          <h4>Colour Palette</h4>
+          <div class="palette">
+            <div class="swatch"><div class="swatch-color" style="background:#0B0F19;"></div><div class="swatch-label">#0B0F19</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#111827;"></div><div class="swatch-label">#111827</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#F8FAFC; border-color:#e2e8f0;"></div><div class="swatch-label">#F8FAFC</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#8B5CF6;"></div><div class="swatch-label">#8B5CF6</div></div>
+          </div>
+
+          <h4>Customisation Highlights</h4>
+          <ul class="learn-list">
+            <li><strong>Home:</strong> Split hero — left side has name + role + statement, right side has a technical overview panel with key metrics</li>
+            <li><strong>Work:</strong> Archive-style project list with title, category, year, and tech stack; click to open full case study</li>
+            <li><strong>About:</strong> Two-column layout — profile card on left, biography on right; skills displayed as structured grouped tags</li>
+            <li><strong>Process:</strong> Connected workflow with 4 stages — focuses on methodology and systems thinking, not job history</li>
+            <li><strong>Contact:</strong> Minimal, centered; email, links, resume download option, and a simple form</li>
+          </ul>
+
+          <h4>Base44 Prompt</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">prompt.txt</span>
+              <button class="code-copy" onclick="copyCode(this)">copy</button>
+            </div>
+            <pre>Build a portfolio website with 5 pages: Home, Work, About, Process, Contact.
+
+VISUAL STYLE
+- Dark theme (#0B0F19)
+- Surface cards (#111827)
+- Primary text (#F8FAFC), Secondary text (#94A3B8)
+- Accent color (#8B5CF6)
+- Modern technical aesthetic inspired by developer tools
+- Subtle grid backgrounds and soft glow effects used sparingly
+- Clean typography with strong hierarchy, large headings (medium-to-bold)
+- Rounded corners (12–16px), smooth hover transitions, minimal but professional
+
+NAVIGATION
+- Sticky top navigation, name/logo left, page links right
+- Semi-transparent blurred background while scrolling
+
+HOME PAGE
+- Split hero layout
+  Left: small label above name, large name, professional title, location, one-line statement
+  Right: technical overview panel with key professional metrics
+- Below hero: featured projects as modern cards — each card has title, tech stack, short description, project link
+
+WORK PAGE
+- Timeline or archive-style layout; each project: title, category, year, tech stack, short summary
+- Clicking opens a detailed project page: large banner image, overview, problem, solution, tech stack, results, external links
+
+ABOUT PAGE
+- Two-column layout: professional profile card (left), name + title + biography (right)
+- Below: technical skills as clean tags or grouped categories
+
+PROCESS PAGE
+- Connected workflow — 4 stages, each with step number, title, description
+- Focus on methodology, problem-solving, and project execution
+
+CONTACT PAGE
+- Centered layout; headline, email, professional links, resume download
+- Contact form: Name, Email, Message, Send button
+
+FOOTER
+- Minimal: copyright, professional links
+
+Feel like a premium engineering portfolio — technical capability, project impact, modern craftsmanship, clean and highly readable.</pre>
+          </div>
+          <a class="template-link" href="https://system-ledger-labs.base44.app/" target="_blank">View live template</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLATE 4 -->
+    <section class="doc-section" id="template-riot">
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">Riot</div>
+          <span class="template-badge">TEMPLATE 04</span>
+        </div>
+        <div class="template-card-body">
+          <p class="template-desc">Loud, fearless, and unapologetically expressive. Feels like an experimental design magazine, a contemporary art exhibition, and a manifesto merged into a portfolio. Massive typography, dramatic color blocks, theatrical interactions. Built for people who want their work to demand attention.</p>
+
+          <h4>Pages</h4>
+          <div class="template-sections">
+            <div class="template-section-pill">Home</div>
+            <div class="template-section-pill">Work</div>
+            <div class="template-section-pill">About</div>
+            <div class="template-section-pill">Process</div>
+            <div class="template-section-pill">Contact</div>
+          </div>
+
+          <h4>Colour Palette</h4>
+          <div class="palette">
+            <div class="swatch"><div class="swatch-color" style="background:#F5F0FF; border-color:#e2e8f0;"></div><div class="swatch-label">#F5F0FF</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#0D0D0D;"></div><div class="swatch-label">#0D0D0D</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#6C3FFF;"></div><div class="swatch-label">#6C3FFF</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#FF4D6D;"></div><div class="swatch-label">#FF4D6D</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#00E5C8;"></div><div class="swatch-label">#00E5C8</div></div>
+          </div>
+
+          <h4>Signature Features</h4>
+          <ul class="learn-list">
+            <li><strong>Entry Gate:</strong> Your surname fills the full viewport — visitors click to shatter the letters and reveal the homepage</li>
+            <li><strong>Cursor Companion:</strong> A floating geometric shape that morphs between a circle, crosshair, and rotating square depending on context</li>
+            <li><strong>Bottom Navigation:</strong> Sticky nav bar at the bottom of the screen — unashamed and graphic</li>
+            <li><strong>Work Page:</strong> Projects as full-width concert setlist rows; hover floods the row with color; click opens a full-screen slide-up drawer</li>
+            <li><strong>Process Page:</strong> 4 full-width color bands that snap into full-screen focus as you scroll through them</li>
+          </ul>
+
+          <h4>Base44 Prompt</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">prompt.txt</span>
+              <button class="code-copy" onclick="copyCode(this)">copy</button>
+            </div>
+            <pre>Build a portfolio website with 5 pages: Home, Work, About, Process, Contact.
+
+VISUAL STYLE
+- Background: #F5F0FF, Secondary background: #EDE8FF, Surfaces: #FFFFFF
+- Primary text: #0D0D0D, Secondary text: #4A4A4A
+- Primary accent: #6C3FFF, Secondary accent: #FF4D6D, Highlight: #00E5C8
+- No glassmorphism — raw layered elements, overlapping type, bold geometry
+- Asymmetric layouts, large saturated color blocks, theatrical transitions
+- Feels like a printed art object that happens to be interactive
+
+ENTRY GATE
+- Full-screen with owner's surname in ultra-bold condensed type filling the viewport
+- Slow color sweep through the letters, tiny monospace instruction: "press anywhere to continue"
+- On click, letters shatter outward fast — dramatically revealing Home page
+
+NAVIGATION
+- Sticky bottom navigation strip in solid deep violet
+- Owner name on left in small caps monospace, page links on right
+- Active page: high-contrast fill block in highlight accent behind it
+- Page transitions: full-screen color flash (80ms)
+
+CURSOR COMPANION
+- Floating geometric shape following cursor with slight lag
+- Morphs: circle near text, crosshair near projects, rotating square near interactive elements
+- Leaves brief color trail (fades in 0.5s), slowly breathes when idle
+- Mobile: replaced by scroll progress line on screen edge
+
+HOME PAGE
+- Full bleed asymmetric — name in enormous condensed serif at an angle or stacked
+- Professional title in tiny uppercase monospace, location in small italic
+- Large editorial image block (slightly rotated 2deg, animated teal border on load, violet overlay)
+- Below hero: irregular masonry/overlapping card grid — bold flat rectangles, full accent fills
+- Hover inverts cards: white background, text adopts the card's accent color
+
+WORK PAGE
+- Full-screen concert poster setlist — each project is a full-width row
+- Large title left, year in monospace far right, thin 1px divider between entries
+- Hover: entire row floods with primary accent, title inverts
+- Click: full-screen case study drawer slides up from bottom (close with large X)
+
+ABOUT PAGE
+- Single column, deliberately narrow, centered like a printed broadside
+- Name in largest type on page, large rotated color block behind it
+- Biography in clean body text, ragged right
+- Skills as dense typographic block in monospace: BRANDING — MOTION — RESEARCH — CREATIVE DIRECTION
+
+PROCESS PAGE
+- 4 full-width horizontal color bands stacked vertically — each a different accent color
+- Enormous faded stage number behind each band, bold title and description in foreground
+- Each band snaps to full-screen focus on scroll, previous band compresses upward
+- Cursor companion changes color to match each band
+
+CONTACT PAGE
+- Full bleed split: left two-thirds = giant "HELLO" or "LET'S TALK" in display type, types itself on load
+- Right one-third: professional links, resume download, borderless form (bottom-line inputs only)
+- Submit button: solid full-width rectangle, fill slides left-to-right on hover
+
+FOOTER
+- Single full-width band in primary accent — copyright left, links right
+
+Feel like someone made this with conviction and refused to be tasteful about it.</pre>
+          </div>
+          <a class="template-link" href="https://kinetic-bold-folio.base44.app" target="_blank">View live template</a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- GENERATING -->
+    <section class="doc-section" id="generating">
+      <div class="section-label">Building</div>
+      <h2>Generating the Website</h2>
+      <p>Once you've chosen a template, go to the Base44 platform, paste the prompt into the input field, and click <strong>Go</strong>. Base44 will generate your portfolio automatically.</p>
+
+      <img src="../static/images/image 6.png">
+
+      <div class="callout">
+        <div class="callout-title">Editing your site</div>
+        <p>To make changes, either send a new prompt describing the changes you want, or use the <strong>Edit Page</strong> option in the preview to modify content directly.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- TROUBLESHOOTING -->
+    <section class="doc-section" id="troubleshoot">
+      <div class="section-label">Help</div>
+      <h2>Troubleshooting</h2>
+      <p>While using Base44, you may run into some common issues. Here's how to identify and fix them:</p>
+
+      <img src="../static/images/image 7.png"
+     style="max-width:600px; height:auto; display:block; margin:1.25rem auto;">
+
+      <div class="trouble-list">
+        <div class="trouble-item">
+          <div class="trouble-problem">Website not generating properly</div>
+          <span class="trouble-tag">generation</span>
+          <ul class="trouble-solution">
+            <li>Recheck the prompt for any missing details</li>
+            <li>Break long prompts into smaller, clearer instructions</li>
+            <li>Regenerate the website</li>
+          </ul>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-problem">Layout looks different from expected</div>
+          <span class="trouble-tag">design</span>
+          <ul class="trouble-solution">
+            <li>Simplify the prompt — avoid too many design instructions at once</li>
+            <li>Specify a clear structure with fewer competing elements</li>
+          </ul>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-problem">Content not appearing correctly</div>
+          <span class="trouble-tag">content</span>
+          <ul class="trouble-solution">
+            <li>Refresh or regenerate</li>
+            <li>Ensure each section is clearly named in the prompt</li>
+            <li>Avoid overly long paragraphs in one input</li>
+          </ul>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-problem">Slow loading or platform lag</div>
+          <span class="trouble-tag">performance</span>
+          <ul class="trouble-solution">
+            <li>Wait and retry after a few seconds</li>
+            <li>Reduce the number of simultaneous edits</li>
+            <li>Reload the page if unresponsive</li>
+          </ul>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-problem">Overcrowded UI or cluttered layout</div>
+          <span class="trouble-tag">design</span>
+          <ul class="trouble-solution">
+            <li>Reduce the number of elements per section</li>
+            <li>Emphasize spacing and minimalism in the prompt</li>
+            <li>Avoid stacking too many features on one page</li>
+          </ul>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-problem">Mobile layout issues</div>
+          <span class="trouble-tag">responsive</span>
+          <ul class="trouble-solution">
+            <li>Specify responsive design in your prompt</li>
+            <li>Request mobile-first layout behavior</li>
+            <li>Simplify complex multi-column layouts</li>
+          </ul>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-problem">Changes not reflecting after edit</div>
+          <span class="trouble-tag">sync</span>
+          <ul class="trouble-solution">
+            <li>Clear cache or refresh the preview</li>
+            <li>Reapply changes using a fresh edit prompt</li>
+            <li>Ensure edits are specific and not contradictory</li>
+          </ul>
+        </div>
+      </div>
+      <img src="../static/images/image 8.png">
+    </section>
+
+    <hr class="divider">
+
+    <!-- PUBLISHING -->
+    <section class="doc-section" id="publish">
+      <div class="section-label">Going Live</div>
+      <h2>Publishing the Website</h2>
+      <p>Once your portfolio is ready, publish it so anyone can access it with a public link.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Review your website</h4>
+            <p>Check all sections — Home, About, Projects, Contact — and verify that text and images are correct.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Click the Publish button</h4>
+            <p>Base44 provides a "Publish" or "Deploy" option. This generates a live version of your website.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Generate a shareable link</h4>
+            <p>After publishing, you receive a unique, customizable URL — this is your live portfolio link.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Test the link</h4>
+            <p>Open it in a new tab or a different device. Make sure everything loads correctly.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Share your portfolio</h4>
+            <p>Add the link to your LinkedIn, resume, email applications, or college applications.</p>
+          </div>
+        </div>
+      </div>
+      <img src="../static/images/image 9.png"
+     style="max-width:600px; height:auto; display:block; margin:1.25rem auto;">
+      <div class="callout">
+        <div class="callout-title">Important</div>
+        <p>Any future changes you make will require you to <strong>republish or update the live site</strong>, depending on the platform settings.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="doc-footer">
+  ASSOCIATION OF COMPUTING AND MACHINERY BPDC
+</footer>
+
+<script>
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(() => {
+      btn.textContent = 'copied!';
+      setTimeout(() => btn.textContent = 'copy', 2000);
+    });
+  }
+
+  // Sidebar active state on scroll
+  const sections = document.querySelectorAll('.doc-section[id]');
+  const sidebarLinks = document.querySelectorAll('.sidebar nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sidebarLinks.forEach(link => {
+          link.parentElement.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.parentElement.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
