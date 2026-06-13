@@ -7,6 +7,12 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
+  html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
   :root {
     --navy: #080f1e;
     --navy-mid: #0d1a30;
@@ -39,16 +45,23 @@
 
   /* ── TOP BAR ── */
   .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--navy);
-    border-bottom: 1px solid var(--border-dark);
-    padding: 0 2rem;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: var(--navy);
+  border-bottom: 1px solid var(--border-dark);
+
+  height: 52px;
+
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 2rem;
+  box-sizing: border-box;
   }
 
   .topbar-brand {
@@ -631,14 +644,21 @@
 
   /* ── FOOTER ── */
   .doc-footer {
-    background: var(--navy);
-    color: #475569;
-    text-align: center;
-    padding: 1.5rem;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    margin-top: 4rem;
+  background: var(--navy);
+  color: #475569;
+
+  text-align: center;
+
+  padding: 1.5rem;
+  margin-top: 4rem;
+
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
   }
 
   /* ── IMAGES ── */
@@ -667,7 +687,7 @@
 <body>
 
 <!-- TOP BAR -->
-<header class="topbar" style="display:flex; justify-content:space-between; align-items:center;">
+<header class="topbar" style="display:flex; justify-content:space-between; align-items:center ; width:100%;">
 
   <div class="topbar-left" style="display:flex; align-items:center; gap:10px;">
     <img src="../static/images/ACM.png" style="height:28px; width:auto;">
