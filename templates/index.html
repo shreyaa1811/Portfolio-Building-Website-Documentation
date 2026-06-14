@@ -7,8 +7,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-
-
   :root {
     --navy: #080f1e;
     --navy-mid: #0d1a30;
@@ -29,7 +27,10 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+  html { 
+    scroll-behavior: smooth;
+    background: var(--navy);
+  }
 
   body {
     font-family: var(--sans);
@@ -41,7 +42,7 @@
 
   /* ── TOP BAR ── */
   .topbar {
-    position: fixed;        /* CHANGED from sticky */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -85,13 +86,14 @@
 
   /* ── LAYOUT ── */
   .layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  min-height: calc(100vh - 52px);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 52px;   /* ADD THIS */
-}
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 52px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 52px;
+    background: var(--off-white);
+  }
 
   /* ── SIDEBAR ── */
   .sidebar {
@@ -103,7 +105,9 @@
     overflow-y: auto;
     background: var(--white);
   }
-
+  .sidebar::-webkit-scrollbar { width: 5px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
   .sidebar-section-label {
     font-family: var(--mono);
     font-size: 10px;
@@ -117,9 +121,7 @@
 
   .sidebar-section-label:first-child { margin-top: 0; }
 
-  .sidebar nav ul {
-    list-style: none;
-  }
+  .sidebar nav ul { list-style: none; }
 
   .sidebar nav ul li a {
     display: block;
@@ -276,18 +278,18 @@
   }
 
   .learn-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  color: #334155;
-  font-size: 14px;
-}
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: #334155;
+    font-size: 14px;
+  }
 
   .learn-label {
-    width: 80px; /* adjust until alignment looks right */
+    width: 80px;
     flex-shrink: 0;
     font-weight: 600;
-}
+  }
 
   /* ── CALLOUT ── */
   .callout {
@@ -388,9 +390,7 @@
     letter-spacing: 0.06em;
   }
 
-  .template-card-body {
-    padding: 1.5rem;
-  }
+  .template-card-body { padding: 1.5rem; }
 
   .template-desc {
     font-size: 14px;
@@ -522,9 +522,7 @@
     margin: 0;
   }
 
-  .trouble-solution li {
-    margin-bottom: 0.2rem;
-  }
+  .trouble-solution li { margin-bottom: 0.2rem; }
 
   /* ── STEPS ── */
   .steps {
@@ -636,65 +634,54 @@
 
   /* ── FOOTER ── */
   .doc-footer {
-  background: var(--navy);
-  color: #475569;
-  text-align: center;
-  padding: 1.5rem;
-  margin-top: 4rem;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  width: 100%;
-  min-width: 100%;   /* ADD THIS */
-  display: block;
-  box-sizing: border-box;
+    background: var(--navy);
+    color: #475569;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 4rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
   }
+
   /* ── IMAGES ── */
- img {
+  img {
     max-width: 100%;
     height: auto;
     border-radius: 12px;
     margin: 1.5rem 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-  /* ── SCROLL UTIL ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  }
 
   @media (max-width: 768px) {
-  .layout { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
-  .main { padding: 2rem 1.25rem; }
-  .feature-grid, .why-grid { grid-template-columns: 1fr; }
-  .template-sections { grid-template-columns: repeat(3, 1fr); }
-
-  .topbar-links {
-    gap: 8px !important;
-    font-size: 12px;
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 2rem 1.25rem; }
+    .feature-grid, .why-grid { grid-template-columns: 1fr; }
+    .template-sections { grid-template-columns: repeat(3, 1fr); }
+    .topbar-links { gap: 8px !important; font-size: 12px; }
   }
-}
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
-<header class="topbar" style="display:flex; justify-content:space-between; align-items:center ; width:100%;">
-
+<header class="topbar" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
   <div class="topbar-left" style="display:flex; align-items:center; gap:10px;">
     <img src="../static/images/ACM.png" style="height:28px; width:auto;">
     <a class="topbar-brand" href="#">PORTFOLIO WEBSITE BUILDING</a>
   </div>
-
   <ul class="topbar-links" style="display:flex; gap:15px; list-style:none; margin:0; padding:0;">
     <li><a href="#intro">Intro</a></li>
+    <li><a href="#static-dynamic">Concepts</a></li>
     <li><a href="#platform">Platform</a></li>
     <li><a href="#templates">Templates</a></li>
     <li><a href="#publish">Publish</a></li>
     <li><a href="#share-links">Upload</a></li>
   </ul>
-
 </header>
 
 <div class="layout">
@@ -707,6 +694,14 @@
         <li><a href="#intro">Overview</a></li>
         <li><a href="#what-is-portfolio">What is a Portfolio?</a></li>
         <li><a href="#output">Final Output</a></li>
+      </ul>
+
+      <div class="sidebar-section-label">Core Concepts</div>
+      <ul>
+        <li><a href="#static-dynamic">Static vs Dynamic</a></li>
+        <li><a href="#frontend-basics">Frontend Basics</a></li>
+        <li><a href="#hosting">Hosting & Domains</a></li>
+        <li><a href="#apis">APIs</a></li>
       </ul>
 
       <div class="sidebar-section-label">The Platform</div>
@@ -777,7 +772,7 @@
       <div class="section-label">Concepts</div>
       <h2>What is a Portfolio and Why is it Needed?</h2>
       <p>A portfolio is a collection of your personal work, achievements, and skills presented on your own terms. In the digital world, it's a personal website that acts like your online resume, but cooler. Unlike a CV, you're not following a format; you're presenting yourself the way <em>you</em> want.</p>
-    
+
       <img src="../static/images/img1.png">
 
       <div class="callout">
@@ -825,6 +820,52 @@
         <li>A fully functional, published link ready to share</li>
       </ul>
       <img src="../static/images/image.png">
+    </section>
+
+    <hr class="divider">
+
+    <!-- CORE CONCEPTS -->
+    <section class="doc-section" id="static-dynamic">
+      <div class="section-label">Core Concepts</div>
+      <h2>Static vs Dynamic Websites</h2>
+      <p>Your portfolio is a <strong>static website</strong>, where the content is fixed and only changes when you manually update and republish it. Every visitor sees the exact same pages. <strong>Dynamic websites</strong>, by contrast, generate content based on user's data, logins, or live information. Think of it as a social media feed website or a live dashboard website showing your GitHub commits.</p>
+      <p>Static sites are faster to load, simpler to host, and cheaper to run, which is why they're perfect for portfolios. Base44 generates static-style output when you hit Publish, bundling everything into files that can be served instantly to anyone who visits your link.</p>
+      <p>The key takeaway is that because your site is static, every time you want to update your projects or bio, you need to edit and republish. There's no database updating in real time behind the scenes.</p>
+      <img src="../static/images/image10.png">
+    </section>
+
+    <hr class="divider">
+
+    <section class="doc-section" id="frontend-basics">
+      <div class="section-label">Core Concepts</div>
+      <h2>Frontend Basics</h2>
+      <p>Every website is built using three core technologies: <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>. Together, they form the foundation of modern web development.</p>
+      <p><strong>HTML</strong> provides the structure of a webpage, <strong>CSS</strong> controls its appearance and styling, and <strong>JavaScript</strong> adds interactivity and dynamic behavior.</p>
+      <p>A simple way to remember them is: <strong>HTML is the structure, CSS is the style, and JavaScript is the behavior.</strong></p>
+      <p>Platforms like <strong>Base44</strong> simplify website creation by generating much of this code for you, allowing you to focus on design and content rather than implementation details.</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="doc-section" id="hosting">
+      <div class="section-label">Core Concepts</div>
+      <h2>Hosting & Domains</h2>
+      <p>Once a website is built, it needs to be <strong>hosted</strong> so that people can access it over the internet. Hosting is the service that stores your website's files on servers and makes them available to visitors 24/7.</p>
+      <p>Every website is also accessed through a <strong>domain name</strong>, which is the address people type into their browser, such as <code style="font-family: var(--mono); font-size: 13px; background: var(--off-white); padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid var(--border);">example.com</code>. Domains make websites easier to find and share than using server IP addresses.</p>
+      <p>Many website building platforms provide free hosting along with a generated subdomain, allowing users to publish their websites without managing any server infrastructure themselves.</p>
+      <p>In the case of <strong>Base44</strong>, your portfolio is hosted for you and receives a shareable <code style="font-family: var(--mono); font-size: 13px; background: var(--off-white); padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid var(--border);">.base44.app</code> link, making it easy to publish and share your work online.</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="doc-section" id="apis">
+      <div class="section-label">Core Concepts</div>
+      <h2>APIs</h2>
+      <p>An <strong>API (Application Programming Interface)</strong> is the way two pieces of software talk to each other. Lets say that you're a customer at a restaurant, the kitchen is the server, and the waiter is the API. You place an order (a request), the waiter takes it to the kitchen, and brings back your food (the response). You never go into the kitchen yourself.</p>
+      <p>Your portfolio's contact form is a real-world example of an API in action. When someone fills in their name, email, and message and hits Send, that data is sent as a request to a backend service (like an email API) which then delivers the message to your inbox. Base44 handles wiring this up automatically so you never see the underlying calls.</p>
+      <p>APIs are everywhere in modern websites such as weather widgets, login buttons ("Sign in with Google"), payment forms, and map embeds all work by making API calls to external services. Knowing they exist helps you understand that a website is rarely just one thing; it is usually many services talking to each other behind the scenes.</p>
+      <p>Now that we've covered the key concepts, let's move on to understanding how the Base44 platform works and start building your portfolio website.</p>
+      <img src="../static/images/image11.png">
     </section>
 
     <hr class="divider">
@@ -932,33 +973,13 @@
             <div class="swatch"><div class="swatch-color" style="background:#E5E5E5; border-color:#e2e8f0;"></div><div class="swatch-label">#E5E5E5</div></div>
           </div>
 
-         <h4>Customisation Highlights</h4>
-
+          <h4>Customisation Highlights</h4>
           <ul class="learn-list">
-            <li>
-              <span class="learn-label">Home:</span>
-              <span>Big light-weight name split across two lines, discipline + location, dark panel with recent projects</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Work:</span>
-              <span>List of projects (title, category, year) : click to expand a full detail page</span>
-            </li>
-
-            <li>
-              <span class="learn-label">About:</span>
-              <span>Square portrait + bio + skills list with no icons, clean text</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Process:</span>
-              <span>4 numbered sections showing how you think</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Contact:</span>
-              <span>Centered, minimal : email link + simple form</span>
-            </li>
+            <li><span class="learn-label">Home:</span><span>Big light-weight name split across two lines, discipline + location, dark panel with recent projects</span></li>
+            <li><span class="learn-label">Work:</span><span>List of projects (title, category, year) : click to expand a full detail page</span></li>
+            <li><span class="learn-label">About:</span><span>Square portrait + bio + skills list with no icons, clean text</span></li>
+            <li><span class="learn-label">Process:</span><span>4 numbered sections showing how you think</span></li>
+            <li><span class="learn-label">Contact:</span><span>Centered, minimal : email link + simple form</span></li>
           </ul>
 
           <h4>Base44 Prompt</h4>
@@ -1033,32 +1054,12 @@ Keep it calm, spacious, and disciplined. The work should feel like it breathes.<
           </div>
 
           <h4>Customisation Highlights</h4>
-
           <ul class="learn-list">
-            <li>
-              <span class="learn-label">Home:</span>
-              <span>Massive bold name on dark background, discipline as a terracotta pill tag, project previews on cream</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Work:</span>
-              <span>2-column card grid with category filters; each card has a terracotta top border</span>
-            </li>
-
-            <li>
-              <span class="learn-label">About:</span>
-              <span>Dark panel with portrait, cream panel with bio, discipline tags, and a pull quote</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Process:</span>
-              <span>4 sections (01–04) ending with "Why hire me" — the most memorable part</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Contact:</span>
-              <span>Dark background, big "Say hello.", email large in terracotta, simple form</span>
-            </li>
+            <li><span class="learn-label">Home:</span><span>Massive bold name on dark background, discipline as a terracotta pill tag, project previews on cream</span></li>
+            <li><span class="learn-label">Work:</span><span>2-column card grid with category filters; each card has a terracotta top border</span></li>
+            <li><span class="learn-label">About:</span><span>Dark panel with portrait, cream panel with bio, discipline tags, and a pull quote</span></li>
+            <li><span class="learn-label">Process:</span><span>4 sections (01–04) ending with "Why hire me" — the most memorable part</span></li>
+            <li><span class="learn-label">Contact:</span><span>Dark background, big "Say hello.", email large in terracotta, simple form</span></li>
           </ul>
 
           <h4>Base44 Prompt</h4>
@@ -1142,31 +1143,12 @@ Make it feel warm, confident, and human.</pre>
 
           <h4>Customisation Highlights</h4>
           <ul class="learn-list">
-          <li>
-            <span class="learn-label">Home:</span>
-            <span>Split hero : left side has name + role + statement, right side has a technical overview panel with key metrics</span>
-          </li>
-
-          <li>
-            <span class="learn-label">Work:</span>
-            <span>Archive-style project list with title, category, year, and tech stack; click to open full case study</span>
-          </li>
-
-          <li>
-            <span class="learn-label">About:</span>
-            <span>Two-column layout : profile card on left, biography on right; skills displayed as structured grouped tags</span>
-          </li>
-
-          <li>
-            <span class="learn-label">Process:</span>
-            <span>Connected workflow with 4 stages — focuses on methodology and systems thinking, not job history</span>
-          </li>
-
-          <li>
-            <span class="learn-label">Contact:</span>
-            <span>Minimal, centered; email, links, resume download option, and a simple form</span>
-          </li>
-        </ul>
+            <li><span class="learn-label">Home:</span><span>Split hero : left side has name + role + statement, right side has a technical overview panel with key metrics</span></li>
+            <li><span class="learn-label">Work:</span><span>Archive-style project list with title, category, year, and tech stack; click to open full case study</span></li>
+            <li><span class="learn-label">About:</span><span>Two-column layout : profile card on left, biography on right; skills displayed as structured grouped tags</span></li>
+            <li><span class="learn-label">Process:</span><span>Connected workflow with 4 stages — focuses on methodology and systems thinking, not job history</span></li>
+            <li><span class="learn-label">Contact:</span><span>Minimal, centered; email, links, resume download option, and a simple form</span></li>
+          </ul>
 
           <h4>Base44 Prompt</h4>
           <div class="code-block">
@@ -1252,30 +1234,11 @@ Feel like a premium engineering portfolio — technical capability, project impa
 
           <h4>Customisation Highlights</h4>
           <ul class="learn-list">
-            <li>
-              <span class="learn-label">Entry Gate:</span>
-              <span>Your surname fills the full viewport; visitors click to shatter the letters and reveal the homepage</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Cursor:</span>
-              <span>A floating geometric shape that morphs between a circle, crosshair, and rotating square depending on context</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Navigation:</span>
-              <span>Sticky nav bar at the bottom of the screen — unashamed and graphic</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Work:</span>
-              <span>Projects as full-width concert setlist rows; hover floods the row with color; click opens a full-screen slide-up drawer</span>
-            </li>
-
-            <li>
-              <span class="learn-label">Process:</span>
-              <span>4 full-width color bands that snap into full-screen focus as you scroll through them</span>
-            </li>
+            <li><span class="learn-label">Entry Gate:</span><span>Your surname fills the full viewport; visitors click to shatter the letters and reveal the homepage</span></li>
+            <li><span class="learn-label">Cursor:</span><span>A floating geometric shape that morphs between a circle, crosshair, and rotating square depending on context</span></li>
+            <li><span class="learn-label">Navigation:</span><span>Sticky nav bar at the bottom of the screen — unashamed and graphic</span></li>
+            <li><span class="learn-label">Work:</span><span>Projects as full-width concert setlist rows; hover floods the row with color; click opens a full-screen slide-up drawer</span></li>
+            <li><span class="learn-label">Process:</span><span>4 full-width color bands that snap into full-screen focus as you scroll through them</span></li>
           </ul>
 
           <h4>Base44 Prompt</h4>
@@ -1358,9 +1321,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
       <div class="section-label">Building</div>
       <h2>Generating the Website</h2>
       <p>Once you've chosen a template, go to the Base44 platform, paste the prompt into the input field, and click <strong>Go</strong>. Base44 will generate your portfolio automatically.</p>
-
       <img src="../static/images/image 6.png">
-
       <div class="callout">
         <div class="callout-title">Editing your site</div>
         <p>To make changes, either send a new prompt describing the changes you want, or use the <strong>Edit Page</strong> option in the preview to modify content directly.</p>
@@ -1374,9 +1335,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
       <div class="section-label">Help</div>
       <h2>Troubleshooting</h2>
       <p>While using Base44, you may run into some common issues. Here's how to identify and fix them:</p>
-
-      <img src="../static/images/image 7.png"
-     style="max-width:600px; height:auto; display:block; margin:1.25rem auto;">
+      <img src="../static/images/image 7.png" style="max-width:600px; height:auto; display:block; margin:1.25rem auto;">
 
       <div class="trouble-list">
         <div class="trouble-item">
@@ -1490,8 +1449,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
           </div>
         </div>
       </div>
-      <img src="../static/images/image 9.png"
-     style="max-width:600px; height:auto; display:block; margin:1.25rem auto;">
+      <img src="../static/images/image 9.png" style="max-width:600px; height:auto; display:block; margin:1.25rem auto;">
       <div class="callout">
         <div class="callout-title">Important</div>
         <p>Any future changes you make will require you to <strong>republish or update the live site</strong>, depending on the platform settings.</p>
@@ -1499,28 +1457,21 @@ Feel like someone made this with conviction and refused to be tasteful about it.
     </section>
 
     <!-- SHARE WEBSITE LINKS -->
-<section class="doc-section" id="share-links">
-  <div class="section-label">Showcase your Websites</div>
-  <h2>Post Your Website Links Publically</h2>
-
-  <p>
-    Use the Padlet board below to share your portfolio website and explore websites created by other students.
-  </p>
-
-  <div class="callout">
-    <div class="callout-title">Share & Explore</div>
-    <p>
-      Post your portfolio link and view submissions from other participants:
-      <br><br>
-      <a href="https://padlet.com/f20230300/showcase-your-portfolio-websites-gu34rl2di9akv3jl" target="_blank"><strong>Open the Padlet Board</strong></a>
-    </p>
-  </div>
-</section>
-
+    <section class="doc-section" id="share-links">
+      <div class="section-label">Showcase your Websites</div>
+      <h2>Post Your Website Links Publically</h2>
+      <p>Use the Padlet board below to share your portfolio website and explore websites created by other students.</p>
+      <div class="callout">
+        <div class="callout-title">Share & Explore</div>
+        <p>Post your portfolio link and view submissions from other participants:
+          <br><br>
+          <a href="https://padlet.com/f20230300/showcase-your-portfolio-websites-gu34rl2di9akv3jl" target="_blank"><strong>Open the Padlet Board</strong></a>
+        </p>
+      </div>
+    </section>
 
   </main>
 </div>
-
 
 <footer class="doc-footer" style="position: fixed; bottom: 0; left: 0; right: 0; width: 100%; box-sizing: border-box; z-index: 100;">
   ASSOCIATION OF COMPUTING AND MACHINERY BPDC
@@ -1535,7 +1486,6 @@ Feel like someone made this with conviction and refused to be tasteful about it.
     });
   }
 
-  // Sidebar active state on scroll
   const sections = document.querySelectorAll('.doc-section[id]');
   const sidebarLinks = document.querySelectorAll('.sidebar nav a');
 
