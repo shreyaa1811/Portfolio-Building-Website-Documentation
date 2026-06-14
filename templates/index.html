@@ -41,18 +41,22 @@
 
   /* ── TOP BAR ── */
   .topbar {
-  background: var(--navy);
-  border-bottom: 1px solid var(--border-dark);
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-width: 100%;
-  padding: 0 2rem;
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
+    position: fixed;        /* CHANGED from sticky */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    z-index: 100;
+    background: var(--navy);
+    border-bottom: 1px solid var(--border-dark);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
 
   .topbar-brand {
     font-family: var(--mono);
@@ -1518,7 +1522,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
 </div>
 
 
-<footer class="doc-footer" style="width: 100%; box-sizing: border-box;">
+<footer class="doc-footer" style="position: fixed; bottom: 0; left: 0; right: 0; width: 100%; box-sizing: border-box; z-index: 100;">
   ASSOCIATION OF COMPUTING AND MACHINERY BPDC
 </footer>
 
