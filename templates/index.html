@@ -272,21 +272,18 @@
   }
 
   .learn-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    color: #334155;
-    font-size: 14px;
-  }
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: #334155;
+  font-size: 14px;
+}
 
-  .learn-list li::before {
-    content: '→';
-    color: var(--blue);
-    font-family: var(--mono);
-    font-size: 12px;
-    margin-top: 2px;
+  .learn-label {
+    width: 80px; /* adjust until alignment looks right */
     flex-shrink: 0;
-  }
+    font-weight: 600;
+}
 
   /* ── CALLOUT ── */
   .callout {
@@ -691,6 +688,7 @@
     <li><a href="#platform">Platform</a></li>
     <li><a href="#templates">Templates</a></li>
     <li><a href="#publish">Publish</a></li>
+    <li><a href="#share-links">Upload</a></li>
   </ul>
 
 </header>
@@ -726,6 +724,11 @@
         <li><a href="#generating">Generating</a></li>
         <li><a href="#troubleshoot">Troubleshooting</a></li>
         <li><a href="#publish">Publishing</a></li>
+      </ul>
+
+      <div class="sidebar-section-label">Showcase Websites</div>
+      <ul>
+        <li><a href="#share-links">Upload to padlet</a></li>
       </ul>
     </nav>
   </aside>
@@ -769,7 +772,7 @@
     <section class="doc-section" id="what-is-portfolio">
       <div class="section-label">Concepts</div>
       <h2>What is a Portfolio and Why is it Needed?</h2>
-      <p>A portfolio is a collection of your personal work, achievements, and skills — presented on your own terms. In the digital world, it's a personal website that acts like your online resume, but cooler. Unlike a CV, you're not following a format; you're presenting yourself the way <em>you</em> want.</p>
+      <p>A portfolio is a collection of your personal work, achievements, and skills presented on your own terms. In the digital world, it's a personal website that acts like your online resume, but cooler. Unlike a CV, you're not following a format; you're presenting yourself the way <em>you</em> want.</p>
     
       <img src="../static/images/img1.png">
 
@@ -793,13 +796,13 @@
         </div>
         <div class="why-item">
           <div class="why-item-title"><span class="why-dot"></span>Easy Sharing</div>
-          <p>One link — that's all you need to show people what you've got.</p>
+          <p>One link is all you need to show people what you've got.</p>
         </div>
       </div>
 
       <div class="callout">
         <div class="callout-title">For Beginners</div>
-        <p>Even without experience, a portfolio is powerful. It shows <strong>potential, creativity, and willingness to learn</strong> — not just past achievements.</p>
+        <p>Even without experience, a portfolio is powerful. It shows <strong>potential, creativity, and willingness to learn</strong>, not just past achievements.</p>
       </div>
     </section>
 
@@ -827,7 +830,7 @@
       <div class="section-label">The Platform</div>
       <h2>Introduction to Base44</h2>
       <p>Base44 is a low-code website building platform that lets you create websites using simple prompts instead of writing code. Instead of manually designing layouts or writing HTML/CSS and JavaScript, you simply describe what you want and let the platform generate the website automatically.</p>
-      <p>It acts as a bridge between your ideas and a working website — ideal for beginners who want results without the complexity of coding.</p>
+      <p>It acts as a bridge between your ideas and a working website which is ideal for beginners who want results without the complexity of coding.</p>
     </section>
 
     <!-- FEATURES -->
@@ -895,7 +898,7 @@
     <section class="doc-section" id="templates">
       <div class="section-label">Design Options</div>
       <h2>Template Options</h2>
-      <p>Choose from four distinct visual styles. Each comes with a ready-to-use Base44 prompt — paste it in and go.</p>
+      <p>Choose from four distinct visual styles. Each comes with a ready-to-use Base44 prompt. Just paste it in and go!</p>
     </section>
 
     <!-- TEMPLATE 1 -->
@@ -906,7 +909,7 @@
           <span class="template-badge">TEMPLATE 01</span>
         </div>
         <div class="template-card-body">
-          <p class="template-desc">Minimal and atmospheric. White space is the main design element — work speaks for itself. Clean nav, full-bleed imagery, and a quiet typographic hierarchy. Suits any creative discipline.</p>
+          <p class="template-desc">Minimal and atmospheric. White space is the main design element where work speaks for itself. Clean nav, full-bleed imagery, and a quiet typographic hierarchy. Suits any creative discipline.</p>
 
           <h4>Pages</h4>
           <div class="template-sections">
@@ -925,13 +928,33 @@
             <div class="swatch"><div class="swatch-color" style="background:#E5E5E5; border-color:#e2e8f0;"></div><div class="swatch-label">#E5E5E5</div></div>
           </div>
 
-          <h4>Customisation Highlights</h4>
+         <h4>Customisation Highlights</h4>
+
           <ul class="learn-list">
-            <li><strong>Home:</strong> Big light-weight name split across two lines, discipline + location, dark panel with recent projects</li>
-            <li><strong>Work:</strong> List of projects (title, category, year) — click to expand a full detail page</li>
-            <li><strong>About:</strong> Square portrait + bio + skills list with no icons, clean text</li>
-            <li><strong>Process:</strong> 4 numbered sections showing how you think — replace a resume with your workflow</li>
-            <li><strong>Contact:</strong> Centered, minimal — email link + simple form</li>
+            <li>
+              <span class="learn-label">Home:</span>
+              <span>Big light-weight name split across two lines, discipline + location, dark panel with recent projects</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Work:</span>
+              <span>List of projects (title, category, year) : click to expand a full detail page</span>
+            </li>
+
+            <li>
+              <span class="learn-label">About:</span>
+              <span>Square portrait + bio + skills list with no icons, clean text</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Process:</span>
+              <span>4 numbered sections showing how you think</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Contact:</span>
+              <span>Centered, minimal : email link + simple form</span>
+            </li>
           </ul>
 
           <h4>Base44 Prompt</h4>
@@ -986,7 +1009,7 @@ Keep it calm, spacious, and disciplined. The work should feel like it breathes.<
           <span class="template-badge">TEMPLATE 02</span>
         </div>
         <div class="template-card-body">
-          <p class="template-desc">Warm, bold, and full of personality. Deep terracotta and cream — feels handmade but polished. Big type, asymmetric layouts, strong opinions. For people who want their portfolio to feel like them.</p>
+          <p class="template-desc">Warm, bold, and full of personality. Deep terracotta and cream feels handmade but polished. Big type, asymmetric layouts, strong opinions. For people who want their portfolio to feel like them.</p>
 
           <h4>Pages</h4>
           <div class="template-sections">
@@ -1006,12 +1029,32 @@ Keep it calm, spacious, and disciplined. The work should feel like it breathes.<
           </div>
 
           <h4>Customisation Highlights</h4>
+
           <ul class="learn-list">
-            <li><strong>Home:</strong> Massive bold name on dark background, discipline as a terracotta pill tag, project previews on cream</li>
-            <li><strong>Work:</strong> 2-column card grid with category filters; each card has a terracotta top border</li>
-            <li><strong>About:</strong> Dark panel with portrait, cream panel with bio, discipline tags, and a pull quote</li>
-            <li><strong>Process:</strong> 4 sections (01–04) ending with "Why hire me" — the most memorable part</li>
-            <li><strong>Contact:</strong> Dark background, big "Say hello.", email large in terracotta, simple form</li>
+            <li>
+              <span class="learn-label">Home:</span>
+              <span>Massive bold name on dark background, discipline as a terracotta pill tag, project previews on cream</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Work:</span>
+              <span>2-column card grid with category filters; each card has a terracotta top border</span>
+            </li>
+
+            <li>
+              <span class="learn-label">About:</span>
+              <span>Dark panel with portrait, cream panel with bio, discipline tags, and a pull quote</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Process:</span>
+              <span>4 sections (01–04) ending with "Why hire me" — the most memorable part</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Contact:</span>
+              <span>Dark background, big "Say hello.", email large in terracotta, simple form</span>
+            </li>
           </ul>
 
           <h4>Base44 Prompt</h4>
@@ -1095,12 +1138,31 @@ Make it feel warm, confident, and human.</pre>
 
           <h4>Customisation Highlights</h4>
           <ul class="learn-list">
-            <li><strong>Home:</strong> Split hero — left side has name + role + statement, right side has a technical overview panel with key metrics</li>
-            <li><strong>Work:</strong> Archive-style project list with title, category, year, and tech stack; click to open full case study</li>
-            <li><strong>About:</strong> Two-column layout — profile card on left, biography on right; skills displayed as structured grouped tags</li>
-            <li><strong>Process:</strong> Connected workflow with 4 stages — focuses on methodology and systems thinking, not job history</li>
-            <li><strong>Contact:</strong> Minimal, centered; email, links, resume download option, and a simple form</li>
-          </ul>
+          <li>
+            <span class="learn-label">Home:</span>
+            <span>Split hero : left side has name + role + statement, right side has a technical overview panel with key metrics</span>
+          </li>
+
+          <li>
+            <span class="learn-label">Work:</span>
+            <span>Archive-style project list with title, category, year, and tech stack; click to open full case study</span>
+          </li>
+
+          <li>
+            <span class="learn-label">About:</span>
+            <span>Two-column layout : profile card on left, biography on right; skills displayed as structured grouped tags</span>
+          </li>
+
+          <li>
+            <span class="learn-label">Process:</span>
+            <span>Connected workflow with 4 stages — focuses on methodology and systems thinking, not job history</span>
+          </li>
+
+          <li>
+            <span class="learn-label">Contact:</span>
+            <span>Minimal, centered; email, links, resume download option, and a simple form</span>
+          </li>
+        </ul>
 
           <h4>Base44 Prompt</h4>
           <div class="code-block">
@@ -1184,13 +1246,32 @@ Feel like a premium engineering portfolio — technical capability, project impa
             <div class="swatch"><div class="swatch-color" style="background:#00E5C8;"></div><div class="swatch-label">#00E5C8</div></div>
           </div>
 
-          <h4>Signature Features</h4>
+          <h4>Customisation Highlights</h4>
           <ul class="learn-list">
-            <li><strong>Entry Gate:</strong> Your surname fills the full viewport — visitors click to shatter the letters and reveal the homepage</li>
-            <li><strong>Cursor Companion:</strong> A floating geometric shape that morphs between a circle, crosshair, and rotating square depending on context</li>
-            <li><strong>Bottom Navigation:</strong> Sticky nav bar at the bottom of the screen — unashamed and graphic</li>
-            <li><strong>Work Page:</strong> Projects as full-width concert setlist rows; hover floods the row with color; click opens a full-screen slide-up drawer</li>
-            <li><strong>Process Page:</strong> 4 full-width color bands that snap into full-screen focus as you scroll through them</li>
+            <li>
+              <span class="learn-label">Entry Gate:</span>
+              <span>Your surname fills the full viewport; visitors click to shatter the letters and reveal the homepage</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Cursor:</span>
+              <span>A floating geometric shape that morphs between a circle, crosshair, and rotating square depending on context</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Navigation:</span>
+              <span>Sticky nav bar at the bottom of the screen — unashamed and graphic</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Work:</span>
+              <span>Projects as full-width concert setlist rows; hover floods the row with color; click opens a full-screen slide-up drawer</span>
+            </li>
+
+            <li>
+              <span class="learn-label">Process:</span>
+              <span>4 full-width color bands that snap into full-screen focus as you scroll through them</span>
+            </li>
           </ul>
 
           <h4>Base44 Prompt</h4>
@@ -1373,7 +1454,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
           <div class="step-num">1</div>
           <div class="step-content">
             <h4>Review your website</h4>
-            <p>Check all sections — Home, About, Projects, Contact — and verify that text and images are correct.</p>
+            <p>Check all sections : Home, About, Projects, Contact and verify that text and images are correct.</p>
           </div>
         </div>
         <div class="step">
@@ -1387,7 +1468,7 @@ Feel like someone made this with conviction and refused to be tasteful about it.
           <div class="step-num">3</div>
           <div class="step-content">
             <h4>Generate a shareable link</h4>
-            <p>After publishing, you receive a unique, customizable URL — this is your live portfolio link.</p>
+            <p>After publishing, you receive a unique, customizable URL which is your live portfolio link.</p>
           </div>
         </div>
         <div class="step">
@@ -1413,8 +1494,29 @@ Feel like someone made this with conviction and refused to be tasteful about it.
       </div>
     </section>
 
+    <!-- SHARE WEBSITE LINKS -->
+<section class="doc-section" id="share-links">
+  <div class="section-label">Showcase your Websites</div>
+  <h2>Post Your Website Links Publically</h2>
+
+  <p>
+    Use the Padlet board below to share your portfolio website and explore websites created by other students.
+  </p>
+
+  <div class="callout">
+    <div class="callout-title">Share & Explore</div>
+    <p>
+      Post your portfolio link and view submissions from other participants:
+      <br><br>
+      <a href="https://padlet.com/f20230300/showcase-your-portfolio-websites-gu34rl2di9akv3jl" target="_blank"><strong>Open the Padlet Board</strong></a>
+    </p>
+  </div>
+</section>
+
+
   </main>
 </div>
+
 
 <footer class="doc-footer" style="width: 100%; box-sizing: border-box;">
   ASSOCIATION OF COMPUTING AND MACHINERY BPDC
